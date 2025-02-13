@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class FruchtermanReingold {
-    private Graph<Integer> g;
+    private final Graph<Integer> g;
     private float temp;
 
     private final Vector center;

@@ -20,8 +20,6 @@ public class SimPanel extends JPanel {
     Timer t;
     DrawPanel draw;
 
-    private static boolean completed = false;
-
 
     //Generates and renders the FTR algo on a graph with n nodes, randomly generated based on constant p
     public SimPanel() {
@@ -70,7 +68,7 @@ public class SimPanel extends JPanel {
         JLabel pFieldLabel = new JLabel("Probability of an edge between each node");
 
         NumberFormat pFormat = new DecimalFormat("#0.0#");
-        NumberFormatter pFormatter = new NumberFormatter(numFormat);
+        NumberFormatter pFormatter = new NumberFormatter(pFormat);
         pFormatter.setValueClass(Float.class);
         pFormatter.setMinimum(0.0f); // Ensure positive values
         pFormatter.setMaximum(1.0f);
@@ -168,8 +166,6 @@ public class SimPanel extends JPanel {
                 }
             }
             //Draw nodes
-            g.setColor(completed ? Color.GREEN : Color.RED);
-
             for (Integer node : graph.getVertices()) {
                 Vector loc = pos.get(node);
 
@@ -215,6 +211,6 @@ public class SimPanel extends JPanel {
                     g.addEdge(i, j, 1);
             }
         }
-        return new Pair<Graph<Integer>, Map<Integer, Vector>>(g, pos);
+        return new Pair<>(g, pos);
     }
 }

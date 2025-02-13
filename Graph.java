@@ -1,14 +1,12 @@
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 public class Graph<V> {
 
     // Adjacency Map implementation
-    private Map<V, Map<V, Integer>> adjMap;
+    private final Map<V, Map<V, Integer>> adjMap;
 
     public Graph() {
-        adjMap = new HashMap<V, Map<V, Integer>>();
+        adjMap = new HashMap<>();
     }
 
     /**
@@ -25,7 +23,7 @@ public class Graph<V> {
         boolean flag = false;
 
         if (!adjMap.containsKey(vertexData)) {
-            adjMap.put(vertexData, new HashMap<V, Integer>());
+            adjMap.put(vertexData, new HashMap<>());
             flag = true;
         }
         return flag;
@@ -33,7 +31,7 @@ public class Graph<V> {
 
     /**
      * Returns true if vertexData exists in the current graph, and false
-     * otherwise
+     * otherwise return false
      *
      * @param vertexData
      * @return boolean
@@ -153,13 +151,12 @@ public class Graph<V> {
             adjMap.remove(vertexData);
 
             for (V v : adjMap.keySet()) {
-                if (adjMap.get(v).containsKey(vertexData))
-                    adjMap.get(v).remove(vertexData);
-            }
+                adjMap.get(v).remove(vertexData);
 
-            flag = true;
+                flag = true;
+            }
+            return flag;
         }
-        return flag;
     }
     /**
      * Returns a collection containing all neighboring vertices to vertexData.
@@ -182,15 +179,4 @@ public class Graph<V> {
         return adjMap.size();
     }
 
-    public void addEdges(V[][] edges) {
-        if (edges[0].length != 2)
-            throw new InputMismatchException("2nd dimension must be an array of length 2");
-
-        for (int i = 0; i < edges.length; i++) {
-            Map<V, Integer> edge = new HashMap<>();
-            edge.put(edges[i][1], 1);
-            adjMap.put(edges[i][0], edge);
-        }
-    }
-    
 }

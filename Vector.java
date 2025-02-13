@@ -1,11 +1,7 @@
 public class Vector {
-	private float x;
-	private float y;
-	
-	public Vector() {
-		x = 0;
-		y = 0;
-	}
+	private final float x;
+	private final float y;
+
 	public Vector(float x, float y) {
 		this.x = x;
 		this.y = y;
