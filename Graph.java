@@ -155,8 +155,8 @@ public class Graph<V> {
 
                 flag = true;
             }
-            return flag;
         }
+        return flag;
     }
     /**
      * Returns a collection containing all neighboring vertices to vertexData.

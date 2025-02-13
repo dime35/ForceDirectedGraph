@@ -165,6 +165,7 @@ public class SimPanel extends JPanel {
                             (int) (loc2.x()), (int) (loc2.y()));
                 }
             }
+            g.setColor(Color.RED);
             //Draw nodes
             for (Integer node : graph.getVertices()) {
                 Vector loc = pos.get(node);
