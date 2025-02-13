@@ -1,12 +1,6 @@
-import dataTypes.Graph;
-import dataTypes.Pair;
-import dataTypes.Vector;
-
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;

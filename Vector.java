@@ -1,5 +1,3 @@
-package dataTypes;
-
 public class Vector {
 	private float x;
 	private float y;
