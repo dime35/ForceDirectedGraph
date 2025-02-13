@@ -33,7 +33,7 @@ public class Graph<V> {
      * Returns true if vertexData exists in the current graph, and false
      * otherwise return false
      *
-     * @param vertexData
+     * @param vertexData a vertex in the graph
      * @return boolean
      */
     public boolean isVertex(V vertexData) {
