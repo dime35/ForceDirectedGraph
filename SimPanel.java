@@ -17,6 +17,9 @@ public class SimPanel extends JPanel {
     private static float k = 80;
     private static int numNodes = 30;
     private static float p = 0.3f;
+
+
+    private JSlider timeSlider;
     Timer t;
     DrawPanel draw;
 
@@ -24,10 +27,7 @@ public class SimPanel extends JPanel {
     //Generates and renders the FTR algo on a graph with n nodes, randomly generated based on constant p
     public SimPanel() {
 
-
-
         setLayout(new GridBagLayout());
-
 
         JPanel inputFieldPane = new JPanel();
         inputFieldPane.setLayout(new BoxLayout(inputFieldPane, BoxLayout.Y_AXIS));
@@ -107,6 +107,8 @@ public class SimPanel extends JPanel {
 
         add(resetButton, resetButtonConstraints);
 
+        t = new Timer(8, e -> draw.update());
+
         Pair<Graph<Integer>, Map<Integer, Vector>> newGraph = generateRandomGraph(numNodes, p);
 
         graph = newGraph.getKey();
@@ -114,16 +116,14 @@ public class SimPanel extends JPanel {
 
         fruchtermanReingold = new FruchtermanReingold(graph, WIDTH, HEIGHT);
 
-        t = new Timer(10, e -> draw.update());
-
         t.start();
+
     }
 
     private JButton getjButton(JFormattedTextField kField, JFormattedTextField numField, JFormattedTextField pField) {
         JButton resetButton = new JButton("Reset Sim");
         resetButton.addActionListener(e -> {
             t.stop();
-
             k = (float) kField.getValue();
             numNodes = (int) numField.getValue();
             p = (float) pField.getValue();
@@ -165,7 +165,7 @@ public class SimPanel extends JPanel {
                             (int) (loc2.x()), (int) (loc2.y()));
                 }
             }
-            g.setColor(Color.RED);
+                g.setColor(Color.BLUE);
             //Draw nodes
             for (Integer node : graph.getVertices()) {
                 Vector loc = pos.get(node);
@@ -176,7 +176,9 @@ public class SimPanel extends JPanel {
         }
 
         public void update() {
+            //if (!finished)
             fruchtermanReingold.FruchtermanReingoldIteration(pos, k);
+
             repaint();
         }
 
@@ -189,7 +191,7 @@ public class SimPanel extends JPanel {
     /**
      * Generates a graph containing numOfNodes nodes, who's positions are randomly generated within the frame.
      * Then for each pair of nodes, generate a random number x between [0, 1). If x < p, add an edge between those nodes
-     * @param numOfNodes
+     * @param numOfNodes number of nodes in the graph
      * @param p
      * @return a pair containing the generated graph and a map with each node and its corresponding position
      */
@@ -200,8 +202,10 @@ public class SimPanel extends JPanel {
         for (int i = 1; i < numOfNodes + 1; i++) {
             g.addVertex(i);
 
-            Vector loc = new Vector((float) (WIDTH * .25f + Math.random() * (WIDTH * 0.5f)),
-                    (float) (WIDTH * 0.25f + Math.random() * (WIDTH * 0.5f)));
+            /* Vector loc = new Vector((float) (WIDTH * .25f + Math.random() * (WIDTH * 0.5f)),
+            (float) (WIDTH * 0.25f + Math.random() * (WIDTH * 0.5f)));*/
+            Vector loc = new Vector((float) (WIDTH * Math.random()),
+                   (float) (HEIGHT * Math.random()));
 
             pos.put(i, loc);
         }

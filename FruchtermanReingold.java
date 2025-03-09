@@ -3,22 +3,29 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+
 public class FruchtermanReingold {
     private final Graph<Integer> g;
     private float temp;
 
     private final Vector center;
 
+    private float edgesPerNode;
+    Map<Integer, Vector> prevPosition;
+
 
     public FruchtermanReingold(Graph<Integer> g, float width, float height) {
         this.g = g;
 
-        temp = 20f * (float)(Math.sqrt(g.size()));
+        temp = 10f * (float)(Math.sqrt(g.size()));
+        edgesPerNode = (float)g.numberOfEdges()/ (float)g.size();
 
         center = new Vector (width / 2, height /2);
     }
 
     public void FruchtermanReingoldIteration(Map<Integer, Vector> position, float k) {
+        Map<Integer, Vector> prevPos = new HashMap<>();
+
         Map<Integer, Vector> movement = new HashMap<>();
         //Fill movement with zero vectors
         for (int node : g.getVertices())
@@ -66,7 +73,7 @@ public class FruchtermanReingold {
             Vector delta = position.get(nodeID).minus(center);
             float distance = delta.norm();
 
-            if (distance < 200f)
+            if (distance < 200f / edgesPerNode)
                 continue;
 
             float gravity = distance * distance / k;
@@ -74,26 +81,31 @@ public class FruchtermanReingold {
             movement.put(nodeID, movement.get(nodeID).minus(delta.times(gravity / distance)));
 
         }
+
+        int notMoving = 0;
+
         //Apply movement to each node, capped by temperature
         for (int nodeID : g.getVertices()) {
             float mvmntNorm = movement.get(nodeID).norm();
 
-            //if < 1.0 not worth computing
-            if (mvmntNorm < 1.0)
+            //Ignore any movement bellow 15f, as this is most likely negligible.
+            if (mvmntNorm < 10 * edgesPerNode) {
                 continue;
+            }
+
             float cappedMvmntNorm = Math.min(mvmntNorm, temp);
 
-            Vector cappedMvment = movement.get(nodeID).times(cappedMvmntNorm / mvmntNorm);
-
-            position.put(nodeID, position.get(nodeID).plus(cappedMvment));
-
+            Vector cappedMvmnt = movement.get(nodeID).times(cappedMvmntNorm / mvmntNorm);
+            position.put(nodeID, position.get(nodeID).plus(cappedMvmnt));
         }
 
         //Turn down the temp!
-        if (temp > 2.0)
+
+        if (temp > 1.5f)
             temp *= 0.85f;
         else
             temp = 1.5f;
+
     }
 
 }

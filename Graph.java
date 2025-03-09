@@ -178,5 +178,12 @@ public class Graph<V> {
     public int size() {
         return adjMap.size();
     }
+    public int numberOfEdges() {
+        int count = 0;
+        for (Map m : adjMap.values()) {
+            count += m.size();
+        }
+        return count;
+    }
 
 }
