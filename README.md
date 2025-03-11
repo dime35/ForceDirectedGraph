@@ -10,9 +10,9 @@ By implementing these forces and treating the system like any other physics simu
 
 ## My simulation
 My implementation is simply a demonstration of the algorithm. The app generates a random graph generated as follows:
-1. The user specifies the number of desired nodes and a specific p-value between 0 and 1
-2. For each pair of nodes, generate a random float between 0 and 1
-3. If p is less than our random number, assign an edge between those nodes
+1. The user specifies the number of desired nodes and a specific p-value between 0 and 1.
+1. For each pair of nodes, generate a random float between 0 and 1.
+1. If p is less than our random number, assign an edge between those nodes.
 
 Initial positions are generated randomly within the grid. After generating a random graph, the Frucherman-Reingold algorithm is applied to it. 
 
